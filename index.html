@@ -98,6 +98,7 @@ function wallSeg(x1,z1,x2,z2,holes=[]){wall=true;material=1;let len=Math.hypot(x
 function tabletop(x,z,w,d,y=.74){material=3;box(x,y,z,w,.075,d,C.wood);for(let u of [-1,1])for(let v of [-1,1])box(x+u*(w/2-.065),0,z+v*(d/2-.065),.07,y,.07,C.wood);material=0;}
 function diningChair(x,z,angle=0,col=C.black){const start=data.length;shadow(x,z,.33,.35);ellipsoid(x,.48,z,.25,.05,.25,col);let ax=0,az=.22;ellipsoid(x+ax,.73,z+az,.245,.26,.048,col);for(let u of [-1,1])for(let v of [-1,1])tube([x+u*.2,.45,z+v*.16],[x+u*.25,.04,z+v*.21],.012,C.chrome);if(angle){let co=Math.cos(angle),si=Math.sin(angle);for(let i=start;i<data.length;i+=12){let dx=data[i]-x,dz=data[i+2]-z;data[i]=x+dx*co-dz*si;data[i+2]=z+dx*si+dz*co;let nx=data[i+3],nz=data[i+5];data[i+3]=nx*co-nz*si;data[i+5]=nx*si+nz*co;}}}
 function cabinet(x,z,w,d){box(x,0,z,w,.80,d,C.white);box(x,.8,z,w+.03,.045,d+.025,'#d9d8d0');const n=Math.ceil(w/.48);for(let i=0;i<n;i++){let xx=x-w/2+(i+.5)*w/n;box(xx,.08,z+d/2+.007,w/n-.012,.69,.014,'#ecece6');tube([xx,.65,z+d/2+.016],[xx,.65,z+d/2+.036],.015,C.chrome)}}
+function monitorX(x,y,z,dir){box(x,y,z,.055,.35,.56,C.black);material=5;box(x+dir*.03,y+.025,z,.008,.30,.505,'#3f626d');material=0;tube([x,y,z],[x,y-.23,z],.02,C.chrome);}
 function monitor(x,y,z,angle=0){box(x,y,z,.56,.35,.055,C.black);material=5;box(x,y+.025,z+.03,.505,.30,.008,'#3f626d');material=0;tube([x,y,z],[x,y-.23,z],.02,C.chrome);}
 function dental(x,z,angle=0){const start=data.length;shadow(x,z,.64,1.19);box(x,.045,z,.72,.15,1.40,'#303a3b');ellipsoid(x,.23,z,.39,.20,.74,C.white);tube([x,.2,z],[x,.60,z-.1],.12,'#d5d8d4');
 // A curved white shell and black reclining upholstery, segmented as in the photographs.
@@ -188,12 +189,12 @@ function revisionSpots(){const q=revisionConfig();return [
 {name:'診察室1',x:3.05,z:3.05,yaw:3.95,pitch:-.13},
 {name:'診察室2',x:7.25,z:1.98,yaw:4.1,pitch:-.12},
 {name:'セミナー',x:2.95,z:6.5,yaw:design==='think928'?1.57:4.7,pitch:-.12},
-{name:'滅菌',x:4.05,z:q.sterileView-.2,yaw:1.57,pitch:-.14},
+design==='think928'?{name:'更衣室',x:5.35,z:6.9,yaw:4.5,pitch:-.14}:{name:'滅菌',x:4.05,z:q.sterileView-.2,yaw:1.57,pitch:-.14},
 {name:'パウダー',x:q.W+.48,z:4.85,yaw:4.7,pitch:-.12},
 {name:'スタッフ',x:4.25,z:5.25,yaw:.15,pitch:-.12},
 {name:'院長室',x:7.05,z:q.D-.72,yaw:3.9,pitch:-.13},
 {name:'X線室',x:6.4,z:5.85,yaw:.65,pitch:-.15},
-{name:'石膏・技工',x:2.75,z:8.62,yaw:1.57,pitch:-.14}];}
+{name:design==='think928'?'滅菌・石膏・技工':'石膏・技工',x:2.75,z:8.62,yaw:1.57,pitch:-.14}];}
 function buildRevision(){const q=revisionConfig(),W=q.W,D=q.D,s=q.split,b=q.back;data=[];barriers=[];material=2;box(W/2,-.15,D/2,W,.15,D,C.floor);material=0;
 wallSeg(0,0,W,0,[[.8,1.9],[2.1,3.3],[4.55,5.5],[5.7,6.8],[7,8]]);wallSeg(0,0,0,D);wallSeg(0,D,W,D);wallSeg(W,0,W,D,[[2.7,4.05],[6.0,6.85]]);
 wallSeg(s,0,s,b,partition?[[.15,b-.15]]:[]);
@@ -241,12 +242,12 @@ wallSeg(5.60,q.staffTop,5.60,q.staffBottom);
 wallSeg(3.45,q.staffBottom,5.60,q.staffBottom,[[.70,1.41]]);
 // Waiting room and CT room exchanged relative to the original proposal.
 wallSeg(5.60,5.15,7.96,5.15,[[.16,1.00]]);wallSeg(5.60,5.15,5.60,7.38);wallSeg(7.96,5.15,7.96,7.38);wallSeg(5.60,7.38,7.96,7.38);
-wallSeg(5.60,7.38,7.96,7.38);wallSeg(5.60,7.38,5.60,D);wallSeg(7.96,7.38,7.96,D,[[.67,1.27]]);
+wallSeg(5.60,7.38,7.96,7.38);wallSeg(5.60,7.38,5.60,D,[[1.12,1.92]]);box(5.67,0,8.10,.035,2.12,.82,'#d8d2c4');box(5.67,2.12,8.10,.05,.05,1.70,C.chrome);wallSeg(7.96,7.38,7.96,D,[[.67,1.27]]);
 if(q.changing){wallSeg(3.45,6.17,5.02,6.17,[[.15,.88]]);wallSeg(5.02,6.17,5.02,7.20);wallSeg(3.45,7.20,5.02,7.20);wallSeg(3.45,6.17,3.45,7.20,[[.10,.86]]);wallSeg(3.45,7.20,3.45,D,[[.18,1.0]]);cabinet(3.8,6.68,.46,.66);}
-else {wallSeg(3.45,q.staffBottom,3.45,8.14,[[.51,1.24]]);wallSeg(3.45,7.75,5.60,7.75);}
+else {wallSeg(3.45,q.staffBottom,3.45,8.14);wallSeg(3.45,7.25,5.60,7.25);}
 wallSeg(0,8.14,3.45,8.14,[[2.60,3.38]]);wallSeg(2.2,8.14,2.2,D,[[.12,1.20]]);
 // Open-ceiling treatment rooms, equipment and the long seminar layout.
-dental(2.05,2.05);(gbt?gbtDental:dental)(6.40,1.20,Math.PI/2);cabinet(.30,1.3,.46,1.62);milling(.65,3.2);cabinet(W-.35,1.35,.5,1.50);
+dental(2.05,2.05,Math.PI/2);(gbt?gbtDental:dental)(6.40,1.20,-Math.PI/2);cabinet(.30,1.3,.46,1.62);milling(.65,3.2);cabinet(W-.35,1.35,.5,1.50);
 for(const [a,c] of [[.8,1.9],[2.1,3.3],[4.55,5.5],[5.7,6.8],[7,8]]){material=5;box((a+c)/2,.8,.03,c-a,1.45,.04,'#c5ddde');material=0;for(let x=a+.02;x<c;x+=.12)box(x,.8,.07,.035,1.43,.04,'#dedfd8');cabinet((a+c)/2,.30,c-a,.42);}
 if(!gbt)hexCluster(W-.075,.5,2.0,'x',true,true);hexCluster(.07,.55,2,'x');
 // Drawing: two columns, two 1800 x 500 mm tables per column, three seats per table.
@@ -257,17 +258,23 @@ material=2;box(6.89,.012,4.05,2.14,.008,2.30,'#94806e');material=0;loungeChair(7
 wall=true;material=1;box(7.98,0,4.12,.04,2.75,2.16,C.orange);wall=false;material=0;
 // Staff, sterilization, CT and director's room.
 tabletop(5.22,4.30,.58,1.75);for(const z of [3.65,4.10,4.55,5.00])diningChair(4.65,z,Math.PI/2);cabinet(3.78,5.45,.50,.65);box(5.15,0,5.55,.55,1.05,.55,C.white);
-cabinet(5.25,q.sterileView,.49,1.22);cabinet(4.40,D-.32,2.4,.50);for(const x of [3.85,5.05]){box(x,.85,D-.32,.48,.025,.36,C.chrome);ellipsoid(x,.865,D-.32,.16,.01,.12,'#929f9d');}cabinet(4.52,7.98,2.0,.4);cabinet(3.85,7.42,.55,.50);box(5.20,.86,q.sterileView-.3,.40,.28,.44,C.white);box(5.20,.86,q.sterileView+.2,.40,.28,.44,C.white);
+// Changing room for two: lockers on the west wall, bench in the middle.
+for(const z of [6.14,6.58,7.02])box(3.71,0,z,.45,1.80,.42,'#e4e2da');box(4.75,0,6.55,.90,.42,.38,C.wood);
+// L-shaped plaster / lab room now also holds sterilization (sterilizers on the east wall, scrub sink on the north wall).
+cabinet(5.33,7.73,.49,.90);box(5.33,.86,7.51,.40,.28,.42,C.white);box(5.33,.86,7.95,.40,.28,.42,C.white);cabinet(4.20,7.50,1.10,.48);box(4.20,.85,7.50,.50,.025,.34,C.chrome);ellipsoid(4.20,.865,7.50,.17,.01,.12,'#929f9d');
+cabinet(4.10,D-.32,2.0,.50);for(const x of [3.60,4.60]){box(x,.85,D-.32,.48,.025,.36,C.chrome);ellipsoid(x,.865,D-.32,.16,.01,.12,'#929f9d');}
 box(2.85,0,D-.35,.85,.82,.52,C.white);ellipsoid(2.85,.85,D-.35,.25,.025,.18,'#cbd4ce');
-tube([7.10,.05,6.75],[7.10,1.98,6.75],.12,C.white);box(6.7,1.89,6.75,.95,.15,.68,C.white);tube([6.25,1.15,6.75],[6.25,1.88,6.75],.045,C.white);tabletop(6.9,5.54,.95,.35);
-cabinet(6.77,7.62,2.12,.38);tabletop(6.75,D-.48,1.9,.50);diningChair(6.50,D-1.10,Math.PI);monitor(6.75,.83,D-.42);cabinet(1.6,D-.45,.65,.7);
+tube([7.10,.05,6.75],[7.10,1.98,6.75],.12,C.white);box(6.7,1.89,6.75,.95,.15,.68,C.white);tube([6.25,1.15,6.75],[6.25,1.88,6.75],.045,C.white);cabinet(7.30,5.47,1.10,.48);box(7.62,.86,5.47,.20,.42,.40,'#d9dbd6');monitor(7.10,1.12,5.40);box(7.10,.85,5.62,.42,.02,.14,'#3b4446');
+tabletop(6.60,7.95,.60,1.00);diningChair(6.00,7.95,Math.PI/2);monitorX(6.78,1.06,7.95,-1);cabinet(7.05,D-.21,1.60,.38);cabinet(1.6,D-.45,.65,.7);
 // Common elevator / powder-room block; same arrival connection as the source plan.
-material=2;box(W+.9,-.15,4.60,1.8,.15,4.5,C.floor);material=0;wallSeg(W,2.4,W+1.8,2.4);wallSeg(W+1.8,2.4,W+1.8,6.9);wallSeg(W,6.9,W+1.8,6.9);
+material=2;box(W+.9,-.15,4.60,1.8,.15,4.5,C.floor);material=0;wallSeg(W,2.4,W+1.8,2.4);wallSeg(W+1.8,2.4,W+1.8,6.9,design==='think928'?[[1.85,2.55],[2.74,3.44]]:[]);wallSeg(W,6.9,W+1.8,6.9);
 wall=true;box(W+.9,0,2.46,1.2,2.25,.08,'#b8c0ba');wall=false;cabinet(W+.26,4.65,.42,.58);box(W+.1,1.13,4.65,.03,.70,.64,'#a9bfba');
 ceiling=true;box(W+.9,2.76,4.6,1.8,.06,4.5,C.white);ceiling=false;
+// Two WC booths, doors from the powder corridor (drawing: booths 1.3 x 0.9m each).
+if(design==='think928'){material=2;box(W+2.45,-.15,5.05,1.30,.15,1.78,'#c9c4b8');material=0;wallSeg(W+1.8,4.16,W+3.11,4.16);wallSeg(W+1.8,5.05,W+3.11,5.05);wallSeg(W+1.8,5.94,W+3.11,5.94);wallSeg(W+3.11,4.16,W+3.11,5.94);for(const z of [4.605,5.495]){ellipsoid(W+2.62,.38,z,.34,.15,.23,C.white);box(W+2.96,.35,z,.20,.45,.48,C.white);}ceiling=true;box(W+2.45,2.76,5.05,1.30,.06,1.78,C.white);ceiling=false;}
 for(const x of [1.22,4.3,7.65])for(const z of [.8,3.0,5.6,8.7]){box(x,2.62,z,.04,.03,1.4,C.white);tube([x,2.62,z],[x,2.42,z],.025,C.white);material=4;ellipsoid(x,2.4,z,.06,.02,.06,'#ffe5b0',12,4);material=0;}
 upload();}
-function mapRevision(){const q=revisionConfig(),k=25,ox=16,oy=16;mc.clearRect(0,0,330,294);mc.fillStyle='#f1f0e8';mc.fillRect(0,0,330,294);function r(x,z,w,d,c){mc.fillStyle=c;mc.fillRect(ox+x*k,oy+z*k,w*k,d*k);}r(0,0,q.W,q.D,'#b6cfcd');r(q.split,0,q.W-q.split,q.back,gbt?'#e698b4':'#b3a094');r(design==='think928'?5.60:5.81,q.back,design==='think928'?2.36:2.15,5.2-q.back,'#d78153');r(3.45,q.staffTop,design==='think928'?2.15:2.36,q.staffBottom-q.staffTop,'#c9cabb');if(design==='think928'){r(5.60,5.15,2.36,2.23,'#cbd1ca');r(5.60,7.38,2.36,q.D-7.38,'#d2c4af');}else{r(5.81,5.2,2.15,2.4,'#cbd1ca');r(5.81,7.73,2.15,q.D-7.73,'#d2c4af');}r(q.W,2.4,1.8,4.5,'#d5cec0');mc.fillStyle='#536767';for(const b of barriers)mc.fillRect(ox+b[0]*k,oy+b[2]*k,(b[1]-b[0])*k,(b[3]-b[2])*k);mc.fillStyle='#243f42';mc.font='12px sans-serif';mc.textAlign='center';for(const [t,x,z] of [['診1',2,2],['診2',6.4,1.2],['セミナー',1.8,6.3],['待合',6.9,4],['スタッフ',4.6,4.9],['X線',6.9,6.5],['滅菌',4.5,7.0],['石膏・技工',3.9,8.85],['院長室',6.9,8.8]])mc.fillText(t,ox+x*k,oy+z*k);if(mode==='walk'){const x=ox+cam.x*k,z=oy+cam.z*k;mc.fillStyle='white';mc.beginPath();mc.arc(x,z,6,0,7);mc.fill();mc.strokeStyle='#d26032';mc.lineWidth=3;mc.beginPath();mc.moveTo(x,z);mc.lineTo(x+Math.sin(cam.yaw)*15,z+Math.cos(cam.yaw)*15);mc.stroke();}}
+function mapRevision(){const q=revisionConfig(),k=25,ox=16,oy=16;mc.clearRect(0,0,330,294);mc.fillStyle='#f1f0e8';mc.fillRect(0,0,330,294);function r(x,z,w,d,c){mc.fillStyle=c;mc.fillRect(ox+x*k,oy+z*k,w*k,d*k);}r(0,0,q.W,q.D,'#b6cfcd');r(q.split,0,q.W-q.split,q.back,gbt?'#e698b4':'#b3a094');r(design==='think928'?5.60:5.81,q.back,design==='think928'?2.36:2.15,5.2-q.back,'#d78153');r(3.45,q.staffTop,design==='think928'?2.15:2.36,q.staffBottom-q.staffTop,'#c9cabb');if(design==='think928'){r(5.60,5.15,2.36,2.23,'#cbd1ca');r(5.60,7.38,2.36,q.D-7.38,'#d2c4af');}else{r(5.81,5.2,2.15,2.4,'#cbd1ca');r(5.81,7.73,2.15,q.D-7.73,'#d2c4af');}r(q.W,2.4,1.8,4.5,'#d5cec0');if(design==='think928')r(q.W+1.8,4.16,1.31,1.78,'#d5cec0');mc.fillStyle='#536767';for(const b of barriers)mc.fillRect(ox+b[0]*k,oy+b[2]*k,(b[1]-b[0])*k,(b[3]-b[2])*k);mc.fillStyle='#243f42';mc.font='12px sans-serif';mc.textAlign='center';for(const [t,x,z] of [['診1',2,2],['診2',6.4,1.2],['セミナー',1.8,6.3],['待合',6.9,4],['スタッフ',4.6,4.9],['X線',6.9,6.5],...(design==='think928'?[['更衣',4.5,6.7],['滅菌・石膏・技工',3.9,8.85]]:[['滅菌',4.5,7.0],['石膏・技工',3.9,8.85]]),['院長室',6.9,8.8]])mc.fillText(t,ox+x*k,oy+z*k);if(mode==='walk'){const x=ox+cam.x*k,z=oy+cam.z*k;mc.fillStyle='white';mc.beginPath();mc.arc(x,z,6,0,7);mc.fill();mc.strokeStyle='#d26032';mc.lineWidth=3;mc.beginPath();mc.moveTo(x,z);mc.lineTo(x+Math.sin(cam.yaw)*15,z+Math.cos(cam.yaw)*15);mc.stroke();}}
 const cpuCanvas=document.createElement('canvas'),cpuContext=cpuCanvas.getContext('2d');
 function softwareRender(){
 const sw=Math.min(tour?800:1050,Math.round(width)),sh=Math.round(sw*height/width);cpuCanvas.width=sw;cpuCanvas.height=sh;const img=cpuContext.createImageData(sw,sh),px=img.data,depth=new Float32Array(sw*sh);depth.fill(Infinity);for(let i=0;i<px.length;i+=4){px[i]=187;px[i+1]=197;px[i+2]=191;px[i+3]=255;}const sn=Math.sin(cam.yaw),cs=Math.cos(cam.yaw),sp=Math.sin(cam.pitch),cp=Math.cos(cam.pitch),foc=Math.min(sw,sh)*.84/zoom;

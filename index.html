@@ -190,7 +190,7 @@ function revisionSpots(){const q=revisionConfig();return [
 {name:'診察室1',x:3.05,z:3.05,yaw:3.95,pitch:-.13},
 {name:'診察室2',x:7.25,z:1.98,yaw:4.1,pitch:-.12},
 {name:'セミナー',x:2.95,z:6.5,yaw:T928()?1.57:4.7,pitch:-.12},
-design==='kazama928'?{name:'更衣室',x:5.35,z:6.9,yaw:4.5,pitch:-.14}:{name:'滅菌',x:4.05,z:q.sterileView-.2,yaw:1.57,pitch:-.14},
+design==='kazama928'?{name:'更衣室',x:4.85,z:6.95,yaw:4.36,pitch:-.14}:{name:'滅菌',x:4.05,z:q.sterileView-.2,yaw:1.57,pitch:-.14},
 {name:'パウダー',x:q.W+.48,z:4.85,yaw:4.7,pitch:-.12},
 {name:'スタッフ',x:4.25,z:5.25,yaw:.15,pitch:-.12},
 {name:'院長室',x:7.05,z:q.D-.72,yaw:3.9,pitch:-.13},
@@ -282,7 +282,7 @@ wallSeg(3.45,q.staffBottom,5.60,q.staffBottom,[[.70,1.41]]);
 wallSeg(5.60,5.15,7.96,5.15,[[.16,1.00]]);wallSeg(5.60,5.15,5.60,7.38);wallSeg(7.96,5.15,7.96,7.38);wallSeg(5.60,7.38,7.96,7.38);
 wallSeg(5.60,7.38,7.96,7.38);wallSeg(5.60,7.38,5.60,D,[[1.12,1.92]]);box(5.67,0,8.10,.035,2.12,.82,'#d8d2c4');box(5.67,2.12,8.10,.05,.05,1.70,C.chrome);wallSeg(7.96,7.38,7.96,D,[[.67,1.27]]);
 if(q.changing){wallSeg(3.45,6.17,5.02,6.17,[[.15,.88]]);wallSeg(5.02,6.17,5.02,7.20);wallSeg(3.45,7.20,5.02,7.20);wallSeg(3.45,6.17,3.45,7.20,[[.10,.86]]);wallSeg(3.45,7.20,3.45,D,[[.18,1.0]]);cabinet(3.8,6.68,.46,.66);}
-else {wallSeg(3.45,q.staffBottom,3.45,8.14);wallSeg(3.45,7.25,5.60,7.25);}
+else {wallSeg(3.45,q.staffBottom,3.45,8.14);wallSeg(3.45,7.25,5.60,7.25,[[1.10,1.90]]);}
 wallSeg(0,8.14,3.45,8.14,[[2.60,3.38]]);wallSeg(2.2,8.14,2.2,D,[[.12,1.20]]);
 // Open-ceiling treatment rooms, equipment and the long seminar layout.
 dental(2.05,2.05,Math.PI/2);(gbt?gbtDental:dental)(6.40,1.20,-Math.PI/2);cabinet(.30,1.3,.46,1.62);milling(.65,3.2);cabinet(W-.35,1.35,.5,1.50);
@@ -297,9 +297,9 @@ wall=true;material=1;box(7.98,0,4.12,.04,2.75,2.16,C.orange);wall=false;material
 // Staff, sterilization, CT and director's room.
 tabletop(5.22,4.30,.58,1.75);for(const z of [3.65,4.10,4.55,5.00])diningChair(4.65,z,Math.PI/2);cabinet(3.78,5.45,.50,.65);box(5.15,0,5.55,.55,1.05,.55,C.white);
 // Changing room for two: lockers on the west wall, bench in the middle.
-for(const z of [6.14,6.58,7.02])box(3.71,0,z,.45,1.80,.42,'#e4e2da');box(4.75,0,6.55,.90,.42,.38,C.wood);
+for(const z of [6.14,6.58,7.02])box(3.71,0,z,.45,1.80,.42,'#e4e2da');box(5.38,0,6.60,.38,.42,.80,C.wood);
 // L-shaped plaster / lab room now also holds sterilization (sterilizers on the east wall, scrub sink on the north wall).
-cabinet(5.33,7.73,.49,.90);box(5.33,.86,7.51,.40,.28,.42,C.white);box(5.33,.86,7.95,.40,.28,.42,C.white);cabinet(4.20,7.50,1.10,.48);box(4.20,.85,7.50,.50,.025,.34,C.chrome);ellipsoid(4.20,.865,7.50,.17,.01,.12,'#929f9d');
+cabinet(3.95,7.50,.90,.48);box(3.73,.86,7.50,.42,.28,.40,C.white);box(4.17,.86,7.50,.42,.28,.40,C.white);cabinet(5.33,8.18,.49,.56);box(5.33,.85,8.18,.34,.025,.42,C.chrome);ellipsoid(5.33,.865,8.18,.12,.01,.16,'#929f9d');
 cabinet(4.10,D-.32,2.0,.50);for(const x of [3.60,4.60]){box(x,.85,D-.32,.48,.025,.36,C.chrome);ellipsoid(x,.865,D-.32,.16,.01,.12,'#929f9d');}
 box(2.85,0,D-.35,.85,.82,.52,C.white);ellipsoid(2.85,.85,D-.35,.25,.025,.18,'#cbd4ce');
 tube([7.10,.05,6.75],[7.10,1.98,6.75],.12,C.white);box(6.7,1.89,6.75,.95,.15,.68,C.white);tube([6.25,1.15,6.75],[6.25,1.88,6.75],.045,C.white);cabinet(7.30,5.47,1.10,.48);box(7.62,.86,5.47,.20,.42,.40,'#d9dbd6');monitor(7.10,1.12,5.40);box(7.10,.85,5.62,.42,.02,.14,'#3b4446');
